@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useLocation } from "react-router-dom";
 
 const Sidebar = () => {
 
@@ -6,14 +7,17 @@ const Sidebar = () => {
     const [isConfig, setIsConfig] = useState(false);
     const loginUser = sessionStorage.getItem('userName');
     const userRole = sessionStorage.getItem('userRole');
+    const location = useLocation();
 
     const handleClick = () => {
         setIsActive(!isActive);
     }
     const handleConfig = () => {
-        setIsConfig(!isConfig);
+        setIsConfig(isConfig);
 
     }
+
+    console.log("loginUser,", loginUser)
 
     return (
         <>
@@ -53,7 +57,7 @@ const Sidebar = () => {
                         <ul class="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
                             <li class="nav-item">
-                                <a href="/" class="nav-link">
+                                <a href="/dashboard" class={location.pathname == '/dashboard' ? "nav-link active" : "nav-link"}>
                                     <i class="nav-icon fas fa-home"></i>
                                     <p>
                                         Home
@@ -61,7 +65,7 @@ const Sidebar = () => {
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a href="/users" class="nav-link">
+                                <a href="/users" class={location.pathname == '/users' ? "nav-link active" : "nav-link"}>
                                     <i class="nav-icon fas fa-users"></i>
                                     <p>
                                         Users
@@ -69,7 +73,7 @@ const Sidebar = () => {
                                 </a>
                             </li>
 
-                            <li class={isActive ? 'nav-item menu-open' : 'nav-item'} onClick={handleClick}>
+                            {/* <li class={isActive ? 'nav-item menu-open' : 'nav-item'} onClick={handleClick}>
                                 <a href="#" class={isActive ? 'nav-link active' : 'nav-link'}>
                                     <i class="nav-icon fas fa-tachometer-alt"></i>
                                     <p>
@@ -97,9 +101,9 @@ const Sidebar = () => {
                                         </a>
                                     </li>
                                 </ul>
-                            </li>
-                            <li class={isConfig ? 'nav-item menu-open' : 'nav-item'} onClick={handleConfig}>
-                                <a href="#" class={isConfig ? 'nav-link active' : 'nav-link'}>
+                            </li> */}
+                            <li class={isConfig == true || (location.pathname == '/modules') || (location.pathname == '/addModule') || (location.pathname == '/saints') || (location.pathname == '/addSaint') ? 'nav-item menu-open' : 'nav-item'} onClick={handleConfig}>
+                                <a href="#" class={isConfig == true || (location.pathname == '/modules') || (location.pathname == '/addModule') || (location.pathname == '/saints') || (location.pathname == '/addSaint') ? 'nav-link active' : 'nav-link'}>
                                     <i class="nav-icon fas fa-cog"></i>
                                     <p>
                                         Configurations
@@ -108,23 +112,18 @@ const Sidebar = () => {
                                 </a>
                                 <ul class="nav nav-treeview">
                                     <li class="nav-item">
-                                        <a href="./index.html" class="nav-link">
+                                        <a href="/modules" class={isConfig == true || (location.pathname == '/modules') || (location.pathname == '/addModule') ? 'nav-link active' : 'nav-link'}>
                                             <i class="nav-icon fas fa-folder"></i>
-                                            <p>Category</p>
+                                            <p>Modules</p>
                                         </a>
                                     </li>
                                     <li class="nav-item">
-                                        <a href="./index2.html" class="nav-link">
-                                            <i class="nav-icon fas fa-chart-bar"></i>
-                                            <p>Subcategory</p>
+                                        <a href="/saints" class={isConfig == true || (location.pathname == '/saints') || (location.pathname == '/addSaint') ? 'nav-link active' : 'nav-link'}>
+                                            <i class="nav-icon fas fa-users"></i>
+                                            <p>Saints</p>
                                         </a>
                                     </li>
-                                    <li class="nav-item">
-                                        <a href="./index3.html" class="nav-link">
-                                            <i class="nav-icon fas fa-gift"></i>
-                                            <p>Items</p>
-                                        </a>
-                                    </li>
+
                                 </ul>
                             </li>
 
